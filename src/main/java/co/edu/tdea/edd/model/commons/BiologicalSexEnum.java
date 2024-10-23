@@ -13,7 +13,6 @@ import java.util.Scanner;
 @Getter
 public enum BiologicalSexEnum  {
 
-
     MAN("1", "Hombre"),
     WOMEN("2", "Mujer"),
     INTERSEX("3", "Indeterminado/Intersexual");

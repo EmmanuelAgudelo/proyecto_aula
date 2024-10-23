@@ -32,6 +32,8 @@ import java.time.LocalDateTime;
 @Setter
 public class User implements Serializable {
 
+    private String document;
+
     private String firstName;
 
     private String middleName;
