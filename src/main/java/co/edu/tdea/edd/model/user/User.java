@@ -1,27 +1,16 @@
 package co.edu.tdea.edd.model.user;
 
 
-import co.edu.tdea.edd.model.commons.BiologicalSexEnum;
-import co.edu.tdea.edd.model.commons.CivilStatusEnum;
-import co.edu.tdea.edd.model.commons.Disability;
-import co.edu.tdea.edd.model.commons.EducationLevelEnum;
-import co.edu.tdea.edd.model.commons.Ethni;
-import co.edu.tdea.edd.model.commons.EthnicCommunity;
-import co.edu.tdea.edd.model.commons.GenderIdentity;
-import co.edu.tdea.edd.model.commons.HealthBenefitsPlanEntity;
-import co.edu.tdea.edd.model.commons.HealthServiceProvider;
-import co.edu.tdea.edd.model.commons.Occupation;
+import co.edu.tdea.edd.model.commons.*;
 import co.edu.tdea.edd.model.geography.City;
 import co.edu.tdea.edd.model.geography.Country;
 import co.edu.tdea.edd.model.geography.LivingPlace;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Entidad para los datos asociados a los usuarios
@@ -30,7 +19,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class User implements Serializable {
+
+    private DocumentType.DocumentTypeEnum documentType;
 
     private String document;
 
@@ -44,13 +36,13 @@ public class User implements Serializable {
 
     private Country nationality;
 
-    private LocalDateTime birthDateTime;
+    private LocalDate birthDate;
 
     private BiologicalSexEnum biologicalSex;
 
-    private Disability disability;
+    private Disability.DisabilityEnum disability;
 
-    private Ethni ethni;
+    private Ethni.EthniEmun ethni;
 
     private EthnicCommunity ethniaCommunity;
 
@@ -90,4 +82,17 @@ public class User implements Serializable {
 
     private HealthBenefitsPlanEntity occupationalRiskInsuranceCompany;
 
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        User user = (User ) obj;
+        return document.equals(user.document); // Suponiendo que 'document' es el identificador único
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(document);
+    }
 }

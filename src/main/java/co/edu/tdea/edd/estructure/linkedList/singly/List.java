@@ -1,163 +1,116 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.tdea.edd.estructure.linkedList.singly;
 
-import co.edu.tdea.edd.model.geography.City;
-import co.edu.tdea.edd.model.user.User;
-import org.w3c.dom.ls.LSOutput;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.function.Consumer;
 
 /**
  *
- * @author ESTUDIANTE
+ * @param <T> El tipo de datos que almacenará la lista
  */
+@Getter
+@Setter
 public class List<T> {
-
-    private Nodo primero;
+    private Nodo<T> head;
+    private Nodo<T> tail;
+    private int size;
 
     public List() {
-        primero = null;
+        this.head = null;
+        this.tail = null;
+        this.size = 0; // Inicializamos size en 0
     }
 
-    public void add(T value) {
-        Nodo nuevo = new Nodo(null, value); // El siguiente nodo de "nuevo" será null, ya que será el último
-
-        if (primero == null) {
-            primero = nuevo; // Si la lista está vacía, el nuevo nodo será el primero
+    public void add(T data) {
+        Nodo<T> newNodo = new Nodo<>(data);
+        if (head == null) {
+            head = newNodo;
+            tail = newNodo;
         } else {
-            Nodo temp = primero;
-            while (temp.getSiguiente() != null) { // Recorre la lista hasta llegar al último nodo
-                temp = temp.getSiguiente();
-            }
-            temp.setSiguiente(nuevo); // Añade el nuevo nodo al final
+            tail.setNext(newNodo);
+            tail = newNodo;
         }
+        size++; // Incrementamos size en cada adición
     }
 
+    public boolean remove(T data) {
+        if (head == null) return false;
 
-    public boolean eliminarNodo(int posicion) {
-
-        if (primero == null || posicion < 0) {
-            System.out.println("Lista vacía o posición inválida.");
-            return false;
-        }
-
-        if (posicion == 0) {
-            primero = primero.getSiguiente();
+        if (head.getData().equals(data)) {
+            head = head.getNext();
+            if (head == null) {
+                tail = null;
+            }
+            size--; // Decrementamos size cuando se elimina un elemento
             return true;
         }
 
-        Nodo temp = primero;
+        Nodo<T> current = head;
+        Nodo<T> prev = null;
 
-        for (int i = 0; temp != null && i < posicion - 1; i++) {
-            temp = temp.getSiguiente();
+        while (current != null && !current.getData().equals(data)) {
+            prev = current;
+            current = current.getNext();
         }
 
-        if (temp == null || temp.getSiguiente() == null) {
-            System.out.println("Posición fuera de rango.");
-            return false;
+        if (current == null) return false;
+
+        prev.setNext(current.getNext());
+
+        if (prev.getNext() == null) {
+            tail = prev;
         }
 
-        temp.setSiguiente(temp.getSiguiente().getSiguiente());
+        size--; // Decrementamos size al eliminar el nodo
         return true;
     }
 
-
-
-    public T buscar(T value) {
-        Nodo temp = primero;
-
-        while (temp != null) {
-            if (temp.getDato() != null && temp.getDato().equals(value)) {
-                return (T) temp.getDato();
+    public T search(T data) {
+        Nodo<T> current = head;
+        while (current != null) {
+            if (current.getData().equals(data)) {
+                return current.getData();
             }
-            temp = temp.getSiguiente();
+            current = current.getNext();
         }
         return null;
     }
 
-    public User buscarPorDocumento(String documento) {
-        // Verifica si el valor a buscar es nulo
-        if (primero == null) {
-            System.out.println("La lista está vacía");
-            return null;
-        }
-        if (documento == null) {
-            System.out.println("El documento no puede ser nulo.");
-            return null;
-        }
-        Nodo<T> temp = primero;
-
-        while (temp != null) {
-            T dato = temp.getDato();
-            // Verifica si el dato es una instancia de User
-            if (dato instanceof User user) {
-                if (documento.equals(user.getDocument())) {
-                    return user; // Retorna el usuario encontrado
-                }
-            }
-            temp = temp.getSiguiente();
-        }
-        System.out.println("No se encontró un usuario con el documento proporcionado.");
-        return null; // Retorna null si no se encuentra el usuario
-    }
-
-    public City buscarCiudadPorCodigo(String code) {
-        // Verifica si el valor a buscar es nulo
-        if (primero == null) {
-            System.out.println("La lista está vacía");
-            return null;
-        }
-        if (code == null) {
-            System.out.println("El código no puede ser nulo.");
-            return null;
-        }
-        Nodo<T> temp = primero;
-
-        while (temp != null) {
-            T dato = temp.getDato();
-            // Verifica si el dato es una instancia de User
-            if (dato instanceof City city) {
-                if (code.equals(city.getCode())) {
-                    return city; // Retorna el usuario encontrado
-                }
-            }
-            temp = temp.getSiguiente();
-        }
-        System.out.println("No se encontró una ciudad con el código proporcionado.");
-        return null; // Retorna null si no se encuentra el usuario
-    }
-
-    public void imprimirGenerico(Consumer<T> imprimir) {
-        Nodo<T> temp = primero;
-        if (temp == null) {
+    public void printList() {
+        Nodo<T> current = head;
+        if (current == null) {
             System.out.println("La lista está vacía.");
             return;
         }
-
-        while (temp != null) {
-            imprimir.accept(temp.getDato()); // Utiliza la función pasada como parámetro para imprimir
-            temp = temp.getSiguiente();
+        while (current != null) {
+            System.out.println(current.getData().toString());
+            current = current.getNext();
         }
     }
 
-    public void listCities() {
-        Nodo<T> temp = primero;
-        if (temp == null) {
-            System.out.println("La lista está vacía.");
-            return;
-        }
+    public Nodo<T> getTail() {
+        return tail;
+    }
 
-        while (temp != null) {
-            T dato = temp.getDato();
-            if (dato instanceof City city) {
-                System.out.println(city.getDescription() + " (" + city.getCode() + ")");
-            } else {
-                System.out.println(dato); // En caso de que el dato no sea del tipo City
-            }
-            temp = temp.getSiguiente();
+    public Nodo<T> getHead() {
+        return head;
+    }
+
+    public int getSize() {
+        return size; // Retorna el tamaño de la lista
+    }
+
+    public boolean isEmpty() {
+        return size == 0; // Verifica si la lista está vacía
+    }
+
+    public void forEach(Consumer<T> action) {
+        Nodo<T> current = head;
+        while (current != null) {
+            action.accept(current.getData());
+            current = current.getNext();
         }
     }
 }

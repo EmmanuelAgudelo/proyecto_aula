@@ -1,5 +1,6 @@
 package co.edu.tdea.edd.model.commons;
 
+import co.edu.tdea.edd.model.ValueSetCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,16 +15,7 @@ import java.io.Serializable;
  * @version 1.0
  * @since 14/12/2023
  */
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
-public class Occupation implements Serializable {
 
-    private String code;
-
-    private String description;
-
-    private Boolean inactive;
+public class Occupation extends ValueSetCode implements Serializable {
 
 }

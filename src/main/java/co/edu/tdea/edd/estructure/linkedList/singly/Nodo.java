@@ -12,6 +12,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Nodo<T> {
-    private Nodo siguiente;
-    private T dato;
+    private T data;
+    private Nodo<T> next;
+
+    Nodo(T data) {
+        this.data = data;
+        this.next = null;
+    }
 }

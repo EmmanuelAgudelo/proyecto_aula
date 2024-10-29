@@ -22,4 +22,7 @@ public class Department extends ValueSetCode implements Serializable {
 
     private Country country;
 
+    public String toString() {
+        return getCode() + " - " + getDescription();
+    }
 }

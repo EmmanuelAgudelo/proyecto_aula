@@ -8,6 +8,7 @@ import java.io.Serializable;
 /**
  * Entidad para los países
  */
+
 public class Country extends ValueSetCode implements Serializable {
 
     public String toString() {

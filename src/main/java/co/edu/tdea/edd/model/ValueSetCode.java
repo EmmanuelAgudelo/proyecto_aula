@@ -12,7 +12,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ValueSetCode {
-
     private String code;
     private String description;
 }
