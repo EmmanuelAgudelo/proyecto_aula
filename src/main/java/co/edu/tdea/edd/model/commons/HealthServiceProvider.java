@@ -13,4 +13,8 @@ import java.io.Serializable;
  */
 
 public class HealthServiceProvider extends ValueSetCode implements Serializable {
+    @Override
+    public String toString() {
+        return getCode() + " - " + getDescription();
+    }
 }

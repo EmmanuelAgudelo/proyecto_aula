@@ -1,72 +1,49 @@
 package co.edu.tdea.edd.model.commons;
 
-import static co.edu.tdea.edd.model.commons.CivilStatusEnum.DIVORCED;
-import static co.edu.tdea.edd.model.commons.CivilStatusEnum.MARRIED;
-import static co.edu.tdea.edd.model.commons.CivilStatusEnum.SINGLE;
-import static co.edu.tdea.edd.model.commons.CivilStatusEnum.WIDOW;
+import co.edu.tdea.edd.model.ValueSetCode;
+
 import java.util.Arrays;
 import java.util.Scanner;
-import lombok.Getter;
 
-/**
- * Enumeración que representa los niveles educativos
- *
- */
-@Getter
-public enum EducationLevelEnum  {
-    ELEMENTARY_SCHOOL("Primaria"),
-    HIGH_SCHOOL("Bachillerato"),
-    PROFESSIONAL("Profesional"),
-    SPECIALIZATION("Especialización"),
-    MASTERS("Maestría"),
-    WITHOUT_STUDIES("Sin estudios");
+public enum EducationLevelEnum {
 
-    private final String description;
+    PRIMARY(new ValueSetCode("1", "Primaria")),
+    SECONDARY(new ValueSetCode("2", "Secundaria")),
+    UNIVERSITY(new ValueSetCode("3", "Universidad"));
 
-    EducationLevelEnum(String description) {
-        this.description = description;
+    private final ValueSetCode valueSetCode;
+
+    EducationLevelEnum(ValueSetCode valueSetCode) {
+        this.valueSetCode = valueSetCode;
     }
 
-    public static EducationLevelEnum getELEMENTARY_SCHOOL() {
-        return ELEMENTARY_SCHOOL;
+    public String getCode() {
+        return valueSetCode.getCode();
     }
 
-    public static EducationLevelEnum getHIGH_SCHOOL() {
-        return HIGH_SCHOOL;
+    public String getDescription() {
+        return valueSetCode.getDescription();
     }
 
-    public static EducationLevelEnum getPROFESSIONAL() {
-        return PROFESSIONAL;
+    @Override
+    public String toString() {
+        return getCode() + " - " + getDescription();
     }
 
-    public static EducationLevelEnum getSPECIALIZATION() {
-        return SPECIALIZATION;
-    }
-
-    public static EducationLevelEnum getMASTERS() {
-        return MASTERS;
-    }
-
-    public static EducationLevelEnum getWITHOUT_STUDIES() {
-        return WITHOUT_STUDIES;
-    }
-
-    public static EducationLevelEnum selectOption(){
-        try(Scanner sc = new Scanner(System.in)){
-            while(true){
-                System.out.println("Seleccione una de las siguientes opciones:");
-                System.out.println(ELEMENTARY_SCHOOL);
-                System.out.println(HIGH_SCHOOL);
-                System.out.println(PROFESSIONAL);
-                System.out.println(SPECIALIZATION);
-                System.out.println(MASTERS);
-                System.out.println(WITHOUT_STUDIES);
-                var opt = sc.next();
-                var select = Arrays.stream(EducationLevelEnum.values()).filter(e -> e.getDescription().equals(opt)).findFirst();
-                if(select.isPresent())
-                    return select.get();
-                else
-                    System.out.println("La opción ingresada no es valida. Intente nuevamente.");
+    public static EducationLevelEnum selectOption(Scanner sc) {
+        while (true) {
+            System.out.println("Seleccione una de las siguientes opciones:");
+            for (EducationLevelEnum level : EducationLevelEnum.values()) {
+                System.out.println(level);
+            }
+            String opt = sc.next();
+            var select = Arrays.stream(EducationLevelEnum.values())
+                    .filter(e -> e.getCode().equals(opt))
+                    .findFirst();
+            if (select.isPresent()) {
+                return select.get();
+            } else {
+                System.out.println("La opción ingresada no es válida. Intente nuevamente.");
             }
         }
     }

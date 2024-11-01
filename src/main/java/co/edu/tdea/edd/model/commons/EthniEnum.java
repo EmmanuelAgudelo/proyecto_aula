@@ -5,16 +5,17 @@ import co.edu.tdea.edd.model.ValueSetCode;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public enum CivilStatusEnum {
+public enum EthniEnum {
 
-    SINGLE(new ValueSetCode("1", "Soltero")),
-    MARRIED(new ValueSetCode("2", "Casado")),
-    WIDOW(new ValueSetCode("3", "Viudo")),
-    DIVORCED(new ValueSetCode("4", "Divorciado"));
+    INDIGENOUS(new ValueSetCode("1", "Indígena")),
+    AFRO_DESCENDANT(new ValueSetCode("2", "Afrodescendiente")),
+    ROM(new ValueSetCode("3", "Rom")),
+    WHITE(new ValueSetCode("4", "Blanco")),
+    OTHER(new ValueSetCode("5", "Otro"));
 
     private final ValueSetCode valueSetCode;
 
-    CivilStatusEnum(ValueSetCode valueSetCode) {
+    EthniEnum(ValueSetCode valueSetCode) {
         this.valueSetCode = valueSetCode;
     }
 
@@ -31,14 +32,14 @@ public enum CivilStatusEnum {
         return getCode() + " - " + getDescription();
     }
 
-    public static CivilStatusEnum selectOption(Scanner sc) {
+    public static EthniEnum selectOption(Scanner sc) {
         while (true) {
             System.out.println("Seleccione una de las siguientes opciones:");
-            for (CivilStatusEnum status : CivilStatusEnum.values()) {
-                System.out.println(status);
+            for (EthniEnum ethni : EthniEnum.values()) {
+                System.out.println(ethni);
             }
             String opt = sc.next();
-            var select = Arrays.stream(CivilStatusEnum.values())
+            var select = Arrays.stream(EthniEnum.values())
                     .filter(e -> e.getCode().equals(opt))
                     .findFirst();
             if (select.isPresent()) {

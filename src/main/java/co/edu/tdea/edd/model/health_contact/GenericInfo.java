@@ -1,4 +1,4 @@
-package co.edu.tdea.edd.model;
+package co.edu.tdea.edd.model.health_contact;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

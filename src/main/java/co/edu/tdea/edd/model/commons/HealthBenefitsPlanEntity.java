@@ -13,5 +13,8 @@ import java.io.Serializable;
  */
 
 public class HealthBenefitsPlanEntity extends ValueSetCode implements Serializable{
-
+    @Override
+    public String toString() {
+        return getCode() + " - " + getDescription();
+    }
 }

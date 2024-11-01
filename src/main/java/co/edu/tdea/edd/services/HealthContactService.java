@@ -1,14 +1,15 @@
 package co.edu.tdea.edd.services;
 
+import co.edu.tdea.edd.estructure.linkedList.singly.Nodo;
 import co.edu.tdea.edd.estructure.queue.Queue;
 import co.edu.tdea.edd.estructure.stack.Stack;
-import co.edu.tdea.edd.model.user.HealthContact;
+import co.edu.tdea.edd.model.health_contact.HealthContact;
 import co.edu.tdea.edd.model.user.User;
 
 public class HealthContactService {
-    private Queue<HealthContact> triageI = new Queue<>();
-    private Queue<HealthContact> triageII = new Queue<>();
-    private Queue<HealthContact> triageIII = new Queue<>();
+    private static Queue<HealthContact> triageI = new Queue<>();
+    private static Queue<HealthContact> triageII = new Queue<>();
+    private static Queue<HealthContact> triageIII = new Queue<>();
     private Stack<HealthContact> billingStack = new Stack<>();
 
     public void createContact(User patient, String triageCategory) {
@@ -26,6 +27,32 @@ public class HealthContactService {
             default:
                 System.out.println("Categoría de triaje no válida.");
                 break;
+        }
+    }
+
+    public static void printQueues() {
+        System.out.println("Contenido de la cola de triaje I:");
+        printQueue(triageI);
+
+        System.out.println("Contenido de la cola de triaje II:");
+        printQueue(triageII);
+
+        System.out.println("Contenido de la cola de triaje III:");
+        printQueue(triageIII);
+    }
+
+    private static void printQueue(Queue<HealthContact> queue) {
+        if (queue.isEmpty()) {
+            System.out.println("La cola está vacía.");
+            return;
+        }
+
+        Nodo<HealthContact> current = queue.getPrimero();
+
+        while (current != null) {
+            HealthContact contact = current.getData();
+            System.out.println("Paciente: " + contact.getPatient().getFirstName());
+            current = current.getNext();
         }
     }
 
@@ -48,7 +75,7 @@ public class HealthContactService {
     public void billPatient() {
         if (!billingStack.isEmpty()) {
             HealthContact contact = billingStack.pop();
-            System.out.println("Facturación completada para el paciente: " + contact.getPatient().getClass());
+            System.out.println("Facturación completada para el paciente: " + contact.getPatient());
         } else {
             System.out.println("No hay pacientes para facturar.");
         }

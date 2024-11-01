@@ -1,7 +1,7 @@
 package co.edu.tdea.edd.services;
 
 import co.edu.tdea.edd.estructure.linkedList.singly.List;
-import co.edu.tdea.edd.model.GenericInfo;
+import co.edu.tdea.edd.model.health_contact.GenericInfo;
 
 public class GenericInfoService {
     private final List<GenericInfo> genericInfoList = new List<>();

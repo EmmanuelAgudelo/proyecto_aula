@@ -1,6 +1,6 @@
-package co.edu.tdea.edd.model.user;
+package co.edu.tdea.edd.model.health_contact;
 
-import co.edu.tdea.edd.services.PatientService;
+import co.edu.tdea.edd.model.user.User;
 import lombok.Getter;
 import lombok.Setter;
 

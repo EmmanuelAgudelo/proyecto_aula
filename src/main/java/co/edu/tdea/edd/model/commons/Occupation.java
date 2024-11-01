@@ -17,5 +17,8 @@ import java.io.Serializable;
  */
 
 public class Occupation extends ValueSetCode implements Serializable {
-
+    @Override
+    public String toString() {
+        return getCode() + " - " + getDescription();
+    }
 }

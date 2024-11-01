@@ -19,10 +19,9 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class User implements Serializable {
 
-    private DocumentType.DocumentTypeEnum documentType;
+    private DocumentTypeEnum documentType;
 
     private String document;
 
@@ -40,13 +39,13 @@ public class User implements Serializable {
 
     private BiologicalSexEnum biologicalSex;
 
-    private Disability.DisabilityEnum disability;
+    private Disability disability;
 
-    private Ethni.EthniEmun ethni;
+    private EthniEnum ethni;
 
-    private EthnicCommunity ethniaCommunity;
+    private EthniCommunityEnum ethniaCommunity;
 
-    private GenderIdentity genderIdentity;
+    private GenderIdentityEnum genderIdentity;
 
     private Country countryOfResidence;
 
@@ -84,15 +83,50 @@ public class User implements Serializable {
 
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        User user = (User ) obj;
-        return document.equals(user.document); // Suponiendo que 'document' es el identificador único
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(getDocument(), user.getDocument());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(document);
+        return Objects.hash(getDocument());
+    }
+
+    @Override
+    public String toString() {
+        return "User   {" +
+                "documentType=" + (documentType != null ? documentType.getDescription() : "null") +
+                ", document='" + (document != null ? document : "null") + '\'' +
+                ", firstName='" + (firstName != null ? firstName : "null") + '\'' +
+                ", middleName='" + (middleName != null ? middleName : "null") + '\'' +
+                ", lastName='" + (lastName != null ? lastName : "null") + '\'' +
+                ", surname='" + (surname != null ? surname : "null") + '\'' +
+                ", birthDate=" + (birthDate != null ? birthDate : "null") +
+                ", nationality=" + (nationality != null ? nationality.getDescription() : "null") +
+                ", city=" + (city != null ? city.getDescription() : "null") +
+                ", address='" + (address != null ? address : "null") + '\'' +
+                ", livingPlace=" + (livingPlace != null ? livingPlace.getDescription() : "null") +
+                ", biologicalSex=" + (biologicalSex != null ? biologicalSex.getDescription() : "null") +
+                ", disability=" + (disability != null ? disability.getDescription() : "null") +
+                ", ethni=" + (ethni != null ? ethni.getDescription() : "null") +
+                ", ethniaCommunity=" + (ethniaCommunity != null ? ethniaCommunity.getDescription() : "null") +
+                ", genderIdentity=" + (genderIdentity != null ? genderIdentity.getDescription() : "null") +
+                ", civilStatus=" + (civilStatus != null ? civilStatus.getDescription() : "null") +
+                ", educationLevel=" + (educationLevel != null ? educationLevel.getDescription() : "null") +
+                ", occupation=" + (occupation != null ? occupation.getDescription() : "null") +
+                ", voluntaryDonation=" + (voluntaryDonation != null ? (voluntaryDonation ? "Sí" : "No") : "null") +
+                ", voluntaryDonationSubscriptionDate=" + (voluntaryDonationSubscriptionDate != null ? voluntaryDonationSubscriptionDate : "null") +
+                ", advanceWill=" + (advanceWill != null ? (advanceWill ? "Sí" : "No") : "null") +
+                ", advanceWillHSPId=" + advanceWillHSPId + // Asumiendo que este es un Long y puede ser null
+                ", advanceWillHSP=" + (advanceWillHSP != null ? advanceWillHSP : "null") +
+                ", advanceWillSubscriptionDate=" + (advanceWillSubscriptionDate != null ? advanceWillSubscriptionDate : "null") +
+                ", healthBenefitsPlanEntity=" + (healthBenefitsPlanEntity != null ? healthBenefitsPlanEntity.getDescription() : "null") +
+                ", healthServiceProvider=" + (healthServiceProvider != null ? healthServiceProvider.getDescription() : "null") +
+                ", familyCompensationBox=" + (familyCompensationBox != null ? familyCompensationBox.getDescription() : "null") +
+                ", occupationalRiskInsuranceCompany=" + (occupationalRiskInsuranceCompany != null ? occupationalRiskInsuranceCompany.getDescription() : "null") +
+                '}';
     }
 }

@@ -1,10 +1,7 @@
 package co.edu.tdea.edd.services;
 
+import co.edu.tdea.edd.DataLoader;
 import co.edu.tdea.edd.estructure.linkedList.singly.List;
-import co.edu.tdea.edd.estructure.queue.Queue;
-import co.edu.tdea.edd.estructure.stack.Stack;
-import co.edu.tdea.edd.model.GenericInfo;
-import co.edu.tdea.edd.model.user.HealthContact;
 import co.edu.tdea.edd.model.user.User;
 
 public class PatientService {
@@ -15,7 +12,9 @@ public class PatientService {
     }
 
     public User findUser(String document) {
-        return patients.search(new User());
+        User user = new User();
+        user.setDocument(document);
+        return DataLoader.getUsers().search(user);
     }
 
     public void printListUser(){

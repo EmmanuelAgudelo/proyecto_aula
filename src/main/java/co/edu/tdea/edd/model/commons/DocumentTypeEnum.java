@@ -5,16 +5,15 @@ import co.edu.tdea.edd.model.ValueSetCode;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public enum CivilStatusEnum {
+public enum DocumentTypeEnum {
 
-    SINGLE(new ValueSetCode("1", "Soltero")),
-    MARRIED(new ValueSetCode("2", "Casado")),
-    WIDOW(new ValueSetCode("3", "Viudo")),
-    DIVORCED(new ValueSetCode("4", "Divorciado"));
+    ID(new ValueSetCode("1", "Cédula de ciudadanía")),
+    PASSPORT(new ValueSetCode("2", "Pasaporte")),
+    ID_FOREIGN(new ValueSetCode("3", "Cédula de extranjería"));
 
     private final ValueSetCode valueSetCode;
 
-    CivilStatusEnum(ValueSetCode valueSetCode) {
+    DocumentTypeEnum(ValueSetCode valueSetCode) {
         this.valueSetCode = valueSetCode;
     }
 
@@ -31,14 +30,14 @@ public enum CivilStatusEnum {
         return getCode() + " - " + getDescription();
     }
 
-    public static CivilStatusEnum selectOption(Scanner sc) {
+    public static DocumentTypeEnum selectOption(Scanner sc) {
         while (true) {
             System.out.println("Seleccione una de las siguientes opciones:");
-            for (CivilStatusEnum status : CivilStatusEnum.values()) {
-                System.out.println(status);
+            for (DocumentTypeEnum type : DocumentTypeEnum.values()) {
+                System.out.println(type);
             }
             String opt = sc.next();
-            var select = Arrays.stream(CivilStatusEnum.values())
+            var select = Arrays.stream(DocumentTypeEnum.values())
                     .filter(e -> e.getCode().equals(opt))
                     .findFirst();
             if (select.isPresent()) {

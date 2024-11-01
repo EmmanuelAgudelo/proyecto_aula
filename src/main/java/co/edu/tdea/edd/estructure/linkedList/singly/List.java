@@ -13,104 +13,82 @@ import java.util.function.Consumer;
 @Getter
 @Setter
 public class List<T> {
-    private Nodo<T> head;
-    private Nodo<T> tail;
-    private int size;
+    private Nodo<T> primero;
 
     public List() {
-        this.head = null;
-        this.tail = null;
-        this.size = 0; // Inicializamos size en 0
+        this.primero = null;
     }
 
     public void add(T data) {
-        Nodo<T> newNodo = new Nodo<>(data);
-        if (head == null) {
-            head = newNodo;
-            tail = newNodo;
+        Nodo<T> nuevoNodo = new Nodo<>(data);
+        if (primero == null) {
+            primero = nuevoNodo;
         } else {
-            tail.setNext(newNodo);
-            tail = newNodo;
+            Nodo<T> actual = primero;
+            while (actual.getNext() != null) {
+                actual = actual.getNext();
+            }
+            actual.setNext(nuevoNodo);
         }
-        size++; // Incrementamos size en cada adición
     }
 
     public boolean remove(T data) {
-        if (head == null) return false;
-
-        if (head.getData().equals(data)) {
-            head = head.getNext();
-            if (head == null) {
-                tail = null;
-            }
-            size--; // Decrementamos size cuando se elimina un elemento
-            return true;
+        if (primero == null) {
+            return false; // La lista está vacía, no se puede eliminar nada
         }
 
-        Nodo<T> current = head;
-        Nodo<T> prev = null;
+        // Caso especial: eliminar el nodo cabeza
+        if (primero.getData().equals(data)) {
+            primero = primero.getNext(); // Mover la cabeza al siguiente nodo
+            return true; // Se eliminó el nodo
+        }
 
-        while (current != null && !current.getData().equals(data)) {
-            prev = current;
+        // Buscar el nodo anterior al que queremos eliminar
+        Nodo<T> current = primero;
+        while (current.getNext() != null) {
+            if (current.getNext().getData().equals(data)) {
+                current.setNext(current.getNext().getNext()); // Saltar el nodo que queremos eliminar
+                return true; // Se eliminó el nodo
+            }
             current = current.getNext();
         }
 
-        if (current == null) return false;
-
-        prev.setNext(current.getNext());
-
-        if (prev.getNext() == null) {
-            tail = prev;
-        }
-
-        size--; // Decrementamos size al eliminar el nodo
-        return true;
+        return false; // No se encontró el dato
     }
 
     public T search(T data) {
-        Nodo<T> current = head;
-        while (current != null) {
-            if (current.getData().equals(data)) {
-                return current.getData();
+        Nodo<T> actual = primero;
+        while (actual != null) {
+            if (actual.getData().equals(data)) {
+                return actual.getData();
             }
-            current = current.getNext();
+            actual = actual.getNext();
         }
         return null;
     }
 
     public void printList() {
-        Nodo<T> current = head;
-        if (current == null) {
+        Nodo<T> actual = primero;
+        if (actual == null) {
             System.out.println("La lista está vacía.");
             return;
         }
-        while (current != null) {
-            System.out.println(current.getData().toString());
-            current = current.getNext();
+        while (actual != null) {
+            System.out.println(actual.getData().toString());
+            actual = actual.getNext();
         }
     }
 
-    public Nodo<T> getTail() {
-        return tail;
-    }
 
-    public Nodo<T> getHead() {
-        return head;
-    }
-
-    public int getSize() {
-        return size; // Retorna el tamaño de la lista
-    }
-
-    public boolean isEmpty() {
-        return size == 0; // Verifica si la lista está vacía
+    public Nodo<T> getPrimero() {
+        return primero;
     }
 
     public void forEach(Consumer<T> action) {
-        Nodo<T> current = head;
-        while (current != null) {
-            action.accept(current.getData());
-            current = current.getNext();
+        Nodo<T> actual = primero;
+        while (actual != null) {
+            action.accept(actual.getData());
+            actual = actual.getNext();
         }
     }
 }
